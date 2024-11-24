@@ -49,12 +49,12 @@
         <li><a href="#" class="nav-link px-2">Tentang</a></li>
       </ul>
 
-      <div class="col-md-3 text-end">
+      <!-- <div class="col-md-3 text-end">
         <button type="button" class="btn btn-outline-primary me-2">
           Login
         </button>
         <button type="button" class="btn btn-primary">Sign-up</button>
-      </div>
+      </div> -->
     </header>
     <!-- </div> -->
 
@@ -76,39 +76,16 @@
             class="form-control"
             id="kodebuku"
             required
-            name="kode"
             oninput="cekJumlahHurufKode()"
+            name="kode"
           />
         </div>
         <div class="col-md-6">
-          <label for="pengarang" class="form-label">Pengarang</label>
-          <input
-            type="text"
-            class="form-control"
-            id="pengarang"
-            name="pengarang"
-          />
+          <label for="judul" class="form-label">Judul</label>
+          <input type="text" class="form-control" id="judul" name="judul" />
         </div>
-        <div class="col-12">
-          <label for="judulbuku" class="form-label">Judul Buku</label>
-          <input
-            type="text"
-            class="form-control"
-            id="judulbuku"
-            name="judul"
-            placeholder="PHP untuk Pemula"
-          />
-        </div>
-        <div class="col-md-6">
-          <label for="penerbit" class="form-label">Penerbit</label>
-          <input
-            type="text"
-            class="form-control"
-            id="penerbit"
-            name="penerbit"
-          />
-        </div>
-        <div class="col-md-6">
+
+        <div class="col-md-4">
           <label for="inputState" class="form-label">Jenis</label>
           <select id="inputState" class="form-select" name="jenis">
             <option selected>Pilih...</option>
@@ -122,7 +99,7 @@
           <label for="inputZip" class="form-label">Zip</label>
           <input type="text" class="form-control" id="inputZip" />
         </div> -->
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="inputState" class="form-label">Kategori Buku</label>
           <div class="form-check">
             <input
@@ -150,7 +127,7 @@
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="inputState" class="form-label">Ketersediaan</label>
           <div class="form-check">
             <input
@@ -179,51 +156,15 @@
           </div>
         </div>
 
-        <div class="col-md-4">
-          <label for="hargaBuku" class="form-label">Harga Buku</label>
-          <input
-            type="text"
-            class="form-control"
-            id="hargaBuku"
-            name="harga"
-            oninput="updateTotal()"
-          />
-        </div>
-        <div class="col-md-4">
-          <label for="jumlahBuku" class="form-label">Jumlah</label>
-          <input
-            type="text"
-            class="form-control"
-            id="jumlahBuku"
-            name="jumlah"
-            oninput="updateTotal()"
-          />
-        </div>
-        <div class="col-md-4">
-          <label for="totalBuku" class="form-label">Total Buku</label>
-          <input
-            type="text"
-            class="form-control"
-            id="totalBuku"
-            name="total"
-            oninput="updateTotal()"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="cover" class="form-label">Upload gambar cover buku</label>
-          <input class="form-control" type="file" id="cover" name="cover" />
-        </div>
-
         <div class="col-12">
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="submit" class="btn btn-primary">Tambah</button>
         </div>
       </form>
     </div>
 
     <div class="container">
       <footer
-        class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 mx-5 border-top"
+        class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 mx-5 border-top fixed-bottom"
       >
         <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
         <a

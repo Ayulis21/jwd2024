@@ -1,3 +1,16 @@
+<?php
+  $kodebuku = $_GET['kodebuku'];
+  // print_r($kodebuku);
+  $conn = mysqli_connect("localhost", "root","", "jwd2024");  
+  $query = "SELECT * FROM buku where kode = '$kodebuku'";
+  $result = mysqli_query($conn, $query);
+  // print($query);
+  $result = mysqli_query($conn, $query);
+  $buku = mysqli_fetch_assoc($result);
+  // print_r($buku);
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -59,15 +72,14 @@
     <!-- </div> -->
 
     <div class="container">
-      <div><h2>Form Tambah Buku</h2></div>
+      <div><h2>Form Ubah Buku</h2></div>
 
       <form
         method="post"
-        action="tambahBukuHandler.php"
+        action="ubahBukuHandler.php"
         class="row g-3"
         name="formBuku"
         onsubmit="return cekPengarang()"
-        enctype="multipart/form-data"
       >
         <div class="col-md-6">
           <label for="kodebuku" class="form-label">Kode Buku</label>
@@ -75,11 +87,12 @@
             type="text"
             class="form-control"
             id="kodebuku"
-            required
             name="kode"
-            oninput="cekJumlahHurufKode()"
+            required
+            value="<?php echo $buku['kode']?>"
           />
         </div>
+
         <div class="col-md-6">
           <label for="pengarang" class="form-label">Pengarang</label>
           <input
@@ -87,8 +100,10 @@
             class="form-control"
             id="pengarang"
             name="pengarang"
+            value="<?php echo $buku['pengarang']?>"
           />
         </div>
+
         <div class="col-12">
           <label for="judulbuku" class="form-label">Judul Buku</label>
           <input
@@ -97,8 +112,10 @@
             id="judulbuku"
             name="judul"
             placeholder="PHP untuk Pemula"
+            value="<?=$buku['judul']?>"
           />
         </div>
+
         <div class="col-md-6">
           <label for="penerbit" class="form-label">Penerbit</label>
           <input
@@ -106,22 +123,21 @@
             class="form-control"
             id="penerbit"
             name="penerbit"
+            value="<?=$buku['penerbit']?>"
           />
         </div>
+
         <div class="col-md-6">
           <label for="inputState" class="form-label">Jenis</label>
           <select id="inputState" class="form-select" name="jenis">
-            <option selected>Pilih...</option>
-            <option>Buku Text</option>
-            <option>Majalah</option>
-            <option>Kamus</option>
-            <option>Jurnal</option>
+            <option selected>Jenis Buku...</option>
+            <option <?php if ($buku['jenis']=='Buku Text') {echo 'selected';}?>>Buku Text</option>
+            <option <?php if ($buku['jenis']=='Majalah') {echo 'selected';}?>>Majalah</option>
+            <option <?php if ($buku['jenis']=='Kamus') {echo 'selected';}?>>Kamus</option>
+            <option <?php if ($buku['jenis']=='Jurnal') {echo 'selected';}?>>Jurnal</option>
           </select>
         </div>
-        <!-- <div class="col-md-2">
-          <label for="inputZip" class="form-label">Zip</label>
-          <input type="text" class="form-control" id="inputZip" />
-        </div> -->
+
         <div class="col-md-6">
           <label for="inputState" class="form-label">Kategori Buku</label>
           <div class="form-check">
@@ -131,6 +147,7 @@
               id="teknologiinformasi"
               name="kategori_rpl"
               value="1"
+              <?php if ($buku['kategori_rpl']==1) {echo 'checked';}?>
             />
             <label class="form-check-label" for="teknologiinformasi">
               Teknologi Informasi
@@ -143,6 +160,8 @@
               id="elektronika"
               name="kategori_elektronika"
               value="1"
+              <?php if ($buku['kategori_elektronika']==1) {echo 'checked';}?>
+
             />
             <label class="form-check-label" for="elektronika">
               Elektronika
@@ -159,6 +178,8 @@
               name="ketersediaan"
               id="flexRadioDefault1"
               value="1"
+              <?php if ($buku['ketersediaan']==1) {echo 'checked';}?>
+
             />
             <label class="form-check-label" for="flexRadioDefault1">
               Tersedia
@@ -170,8 +191,8 @@
               type="radio"
               name="ketersediaan"
               for="flexRadioDefault2"
-              checked
               value="0"
+              <?php if ($buku['ketersediaan']==0) {echo 'checked';}?>
             />
             <label class="form-check-label" for="flexRadioDefault2">
               Kosong
@@ -187,8 +208,10 @@
             id="hargaBuku"
             name="harga"
             oninput="updateTotal()"
+            value="<?= $buku['harga']?>"
           />
         </div>
+        
         <div class="col-md-4">
           <label for="jumlahBuku" class="form-label">Jumlah</label>
           <input
@@ -197,8 +220,10 @@
             id="jumlahBuku"
             name="jumlah"
             oninput="updateTotal()"
+            value="<?= $buku['jumlah']?>"
           />
         </div>
+
         <div class="col-md-4">
           <label for="totalBuku" class="form-label">Total Buku</label>
           <input
@@ -212,11 +237,11 @@
 
         <div class="mb-3">
           <label for="cover" class="form-label">Upload gambar cover buku</label>
-          <input class="form-control" type="file" id="cover" name="cover" />
+          <input class="form-control" type="file" id="cover" name="cover"/>
         </div>
 
         <div class="col-12">
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="submit" class="btn btn-primary">Sign in</button>
         </div>
       </form>
     </div>
@@ -260,6 +285,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="assets/js/app.js"></script>
+    <script src="./assets/js/app.js"></script>
   </body>
 </html>

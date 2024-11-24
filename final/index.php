@@ -1,5 +1,5 @@
 <?php
-// $semuaBuku=[
+// $semua_buku=[
 //   [
 //     'kode'=>'B2341',
 //     'judul'=>'PHP pemula',
@@ -27,7 +27,7 @@
 // ];
 
 $conn = mysqli_connect("localhost", "root","", "jwd2024");
-$semuaBuku = mysqli_query($conn, "SELECT * FROM buku");
+$semua_buku = mysqli_query($conn, "SELECT * FROM buku2");
 ?>
 
 <!DOCTYPE html>
@@ -70,12 +70,12 @@ $semuaBuku = mysqli_query($conn, "SELECT * FROM buku");
         <li><a href="#" class="nav-link px-2">FAQs</a></li>
         <li><a href="#" class="nav-link px-2">Tentang</a></li>
       </ul>
-      <div class="col-md-3 text-end">
+      <!-- <div class="col-md-3 text-end">
         <button type="button" class="btn btn-outline-primary me-2">
           Login
         </button>
         <button type="button" class="btn btn-primary">Sign-up</button>
-      </div>
+      </div> -->
     </header>
     <!-- </div> -->
 
@@ -98,21 +98,16 @@ $semuaBuku = mysqli_query($conn, "SELECT * FROM buku");
             <th scope="col">No</th>
             <th scope="col">Kode</th>
             <th scope="col">Judul</th>
-            <th scope="col">Cover</th>
-            <th scope="col">Pengarang</th>
-            <th scope="col">Penerbit</th>
             <th scope="col">Jenis</th>
             <th scope="col">Kategori</th>
             <th scope="col">Ketersediaan</th>
-            <th scope="col">Harga</th>
-            <th scope="col">Jumlah</th>
             <th scope="col">Aksi</th>
           </tr>
         </thead>
         <tbody>
           <?php
             $i = 1;
-            foreach($semuaBuku as $buku){
+            foreach($semua_buku as $buku){
           ?>          
           <tr>
             <th scope="row">
@@ -120,12 +115,6 @@ $semuaBuku = mysqli_query($conn, "SELECT * FROM buku");
             </th>
             <td><?=$buku['kode']?></td>
             <td><?= $buku['judul']?></td>
-            <td>
-              <img src="images/<?= $buku['cover']?>" alt="Cover" width="75px" height="100px">
-
-            </td>
-            <td><?= $buku['pengarang']?></td>
-            <td><?= $buku['penerbit']?></td>
             <td><?= $buku['jenis']?></td>
             <td>
               <?php
@@ -145,11 +134,9 @@ $semuaBuku = mysqli_query($conn, "SELECT * FROM buku");
               ?>
 
             </td>
-            <td><?= $buku['harga']?></td>
-            <td><?= $buku['jumlah']?></td>
             <td>
-              <a href="ubahbuku.php?kodebuku=<?=$buku['kode']?>">Ubah</a>
-              <a href="hapusbuku.php?kodebuku=<?=$buku['kode']?>">Hapus</a>
+              <a href="ubahbuku.php?kodebuku=<?=$buku['kode']?>"><button type="submit" class="btn btn-primary">Ubah</button></a>
+              <a href="hapusbuku.php?kodebuku=<?=$buku['kode']?>"><button type="submit" class="btn btn-danger">Hapus</button></a>
             </td>
           </tr>
           <?php

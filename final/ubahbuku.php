@@ -1,3 +1,16 @@
+<?php
+  $kodebuku = $_GET['kodebuku'];
+  // print_r($kodebuku);
+  $conn = mysqli_connect("localhost", "root","", "jwd2024");  
+  $query = "SELECT * FROM buku2 where kode = '$kodebuku'";
+  $result = mysqli_query($conn, $query);
+  // print($query);
+  $result = mysqli_query($conn, $query);
+  $buku = mysqli_fetch_assoc($result);
+  // print_r($buku);
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -49,21 +62,21 @@
         <li><a href="#" class="nav-link px-2">Tentang</a></li>
       </ul>
 
-      <div class="col-md-3 text-end">
+      <!-- <div class="col-md-3 text-end">
         <button type="button" class="btn btn-outline-primary me-2">
           Login
         </button>
         <button type="button" class="btn btn-primary">Sign-up</button>
-      </div>
+      </div> -->
     </header>
     <!-- </div> -->
 
     <div class="container">
-      <div><h2>Form Tambah Buku</h2></div>
+      <div><h2>Form Ubah Buku</h2></div>
 
       <form
         method="post"
-        action="tambahBukuHandler.php"
+        action="ubahBukuHandler.php"
         class="row g-3"
         name="formBuku"
         onsubmit="return cekPengarang()"
@@ -75,21 +88,14 @@
             type="text"
             class="form-control"
             id="kodebuku"
-            required
             name="kode"
+            required
+            value="<?php echo $buku['kode']?>"
             oninput="cekJumlahHurufKode()"
           />
         </div>
-        <div class="col-md-6">
-          <label for="pengarang" class="form-label">Pengarang</label>
-          <input
-            type="text"
-            class="form-control"
-            id="pengarang"
-            name="pengarang"
-          />
-        </div>
-        <div class="col-12">
+
+        <div class="col-6">
           <label for="judulbuku" class="form-label">Judul Buku</label>
           <input
             type="text"
@@ -97,32 +103,23 @@
             id="judulbuku"
             name="judul"
             placeholder="PHP untuk Pemula"
+            value="<?=$buku['judul']?>"
+            required
           />
         </div>
-        <div class="col-md-6">
-          <label for="penerbit" class="form-label">Penerbit</label>
-          <input
-            type="text"
-            class="form-control"
-            id="penerbit"
-            name="penerbit"
-          />
-        </div>
-        <div class="col-md-6">
+
+        <div class="col-md-4">
           <label for="inputState" class="form-label">Jenis</label>
           <select id="inputState" class="form-select" name="jenis">
-            <option selected>Pilih...</option>
-            <option>Buku Text</option>
-            <option>Majalah</option>
-            <option>Kamus</option>
-            <option>Jurnal</option>
+            <option selected>Jenis Buku...</option>
+            <option <?php if ($buku['jenis']=='Buku Text') {echo 'selected';}?>>Buku Text</option>
+            <option <?php if ($buku['jenis']=='Majalah') {echo 'selected';}?>> Majalah</option>
+            <option <?php if ($buku['jenis']=='Kamus') {echo 'selected';}?> >Kamus</option>
+            <option <?php if ($buku['jenis']=='Jurnal') {echo 'selected';}?>>Jurnal</option>
           </select>
         </div>
-        <!-- <div class="col-md-2">
-          <label for="inputZip" class="form-label">Zip</label>
-          <input type="text" class="form-control" id="inputZip" />
-        </div> -->
-        <div class="col-md-6">
+
+        <div class="col-md-4">
           <label for="inputState" class="form-label">Kategori Buku</label>
           <div class="form-check">
             <input
@@ -131,6 +128,7 @@
               id="teknologiinformasi"
               name="kategori_rpl"
               value="1"
+              <?php if ($buku['kategori_rpl']==1) {echo 'checked';}?>
             />
             <label class="form-check-label" for="teknologiinformasi">
               Teknologi Informasi
@@ -143,6 +141,8 @@
               id="elektronika"
               name="kategori_elektronika"
               value="1"
+              <?php if ($buku['kategori_elektronika']==1) {echo 'checked';}?>
+
             />
             <label class="form-check-label" for="elektronika">
               Elektronika
@@ -150,7 +150,7 @@
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="inputState" class="form-label">Ketersediaan</label>
           <div class="form-check">
             <input
@@ -159,6 +159,8 @@
               name="ketersediaan"
               id="flexRadioDefault1"
               value="1"
+              <?php if ($buku['ketersediaan']==1) {echo 'checked';}?>
+
             />
             <label class="form-check-label" for="flexRadioDefault1">
               Tersedia
@@ -170,8 +172,8 @@
               type="radio"
               name="ketersediaan"
               for="flexRadioDefault2"
-              checked
               value="0"
+              <?php if ($buku['ketersediaan']==0) {echo 'checked';}?>
             />
             <label class="form-check-label" for="flexRadioDefault2">
               Kosong
@@ -179,51 +181,15 @@
           </div>
         </div>
 
-        <div class="col-md-4">
-          <label for="hargaBuku" class="form-label">Harga Buku</label>
-          <input
-            type="text"
-            class="form-control"
-            id="hargaBuku"
-            name="harga"
-            oninput="updateTotal()"
-          />
-        </div>
-        <div class="col-md-4">
-          <label for="jumlahBuku" class="form-label">Jumlah</label>
-          <input
-            type="text"
-            class="form-control"
-            id="jumlahBuku"
-            name="jumlah"
-            oninput="updateTotal()"
-          />
-        </div>
-        <div class="col-md-4">
-          <label for="totalBuku" class="form-label">Total Buku</label>
-          <input
-            type="text"
-            class="form-control"
-            id="totalBuku"
-            name="total"
-            oninput="updateTotal()"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="cover" class="form-label">Upload gambar cover buku</label>
-          <input class="form-control" type="file" id="cover" name="cover" />
-        </div>
-
         <div class="col-12">
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="submit" class="btn btn-primary">Ubah</button>
         </div>
       </form>
     </div>
 
     <div class="container">
       <footer
-        class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 mx-5 border-top"
+        class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 mx-5 border-top fixed-bottom"
       >
         <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
         <a
