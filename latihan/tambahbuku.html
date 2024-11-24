@@ -61,10 +61,22 @@
     <div class="container">
       <div><h2>Form Tambah Buku</h2></div>
 
-      <form class="row g-3" name="formBuku" onsubmit="return cekPengarang()">
+      <form
+        method="post"
+        action="tambahBukuHandler.php"
+        class="row g-3"
+        name="formBuku"
+        onsubmit="return cekPengarang()"
+      >
         <div class="col-md-6">
           <label for="kodebuku" class="form-label">Kode Buku</label>
-          <input type="text" class="form-control" id="kodebuku" required />
+          <input
+            type="text"
+            class="form-control"
+            id="kodebuku"
+            required
+            name="kode"
+          />
         </div>
         <div class="col-md-6">
           <label for="pengarang" class="form-label">Pengarang</label>
@@ -81,16 +93,22 @@
             type="text"
             class="form-control"
             id="judulbuku"
+            name="judul"
             placeholder="PHP untuk Pemula"
           />
         </div>
         <div class="col-md-6">
           <label for="penerbit" class="form-label">Penerbit</label>
-          <input type="text" class="form-control" id="penerbit" />
+          <input
+            type="text"
+            class="form-control"
+            id="penerbit"
+            name="penerbit"
+          />
         </div>
         <div class="col-md-6">
           <label for="inputState" class="form-label">State</label>
-          <select id="inputState" class="form-select">
+          <select id="inputState" class="form-select" name="jenis">
             <option selected>Pilih...</option>
             <option>Buku Text</option>
             <option>Majalah</option>
@@ -109,13 +127,19 @@
               class="form-check-input"
               type="checkbox"
               id="teknologiinformasi"
+              name="kategori_rpl"
             />
             <label class="form-check-label" for="teknologiinformasi">
               Teknologi Informasi
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="elektronika" />
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="elektronika"
+              name="kategori_elektronika"
+            />
             <label class="form-check-label" for="elektronika">
               Elektronika
             </label>
@@ -128,10 +152,10 @@
             <input
               class="form-check-input"
               type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
+              name="ketersediaan"
+              id="ketersediaan1"
             />
-            <label class="form-check-label" for="flexRadioDefault1">
+            <label class="form-check-label" for="ketersediaan1">
               Default radio
             </label>
           </div>
@@ -139,11 +163,11 @@
             <input
               class="form-check-input"
               type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
+              name="ketersediaan"
+              id="ketersediaan2"
               checked
             />
-            <label class="form-check-label" for="flexRadioDefault2">
+            <label class="form-check-label" for="ketersediaan2">
               Default checked radio
             </label>
           </div>
@@ -155,6 +179,7 @@
             type="text"
             class="form-control"
             id="hargaBuku"
+            name="harga"
             oninput="updateTotal()"
           />
         </div>
@@ -164,6 +189,7 @@
             type="text"
             class="form-control"
             id="jumlahBuku"
+            name="jumlah"
             oninput="updateTotal()"
           />
         </div>
@@ -173,6 +199,7 @@
             type="text"
             class="form-control"
             id="totalBuku"
+            name="total"
             oninput="updateTotal()"
           />
         </div>
